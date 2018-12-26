@@ -68,5 +68,4 @@
             placeholder: "Select a recipient"
         });
     });
-
 </script>
