@@ -15,18 +15,9 @@
             <?php echo $this->Form->create('Message', ['novalidate' => true]); ?>
                 <div class="card-header">
                    <?php 
-                        $options = [];
-                        foreach($users as $key => $user) {
-                            $options[$key] = [
-                                'name' => $user['User']['name'],
-                                'value' => $user['User']['id'],
-                                'data-image' => $user['User']['image'] ?: '',
-                            ];
-                        }
-                        array_unshift($options, ['name' => '', 'value' => '', 'data-image' => '']);
                         echo $this->Form->input('to_id', [
                             'default' => '',
-                            'options' => $options,
+                            'options' => $users,
                             'class' => 'form-control',
                             'label' => [
                                 'text' => 'To:',

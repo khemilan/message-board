@@ -68,6 +68,7 @@ class MessagesController extends AppController {
                     'recursive' => -1,
                 ]);
 
+                # format result data
                 $isSentByUser = $replyData[0]['replySender'] == $this->Auth->user('name');
                 $messages[$message['Message']['id']] = [
                     'id' => $replyData['Message']['id'],
@@ -97,48 +98,16 @@ class MessagesController extends AppController {
     }
 
     public function add() {
-        # get users
-        $this->loadModel('User');
-        $users = $this->User->find('all', [
-            'fields' => ['User.id', 'User.name', 'User.image'],
-            'conditions' => [
-                'User.id !=' => $this->Auth->user('id'),
-            ],
-            'recursive' => -1,
-        ]);
+        $users = $this->_setOptionData();
 
         if ($this->request->is('post')) {
             $this->Message->set($this->request->data);
             if ($this->Message->validates()) {
-                $messages = $this->Message->find('first', [
-                    'fields' => ['Message.id'],
-                    'conditions' => [
-                        'OR' => [
-                            ['AND' => [
-                                ['Message.from_id' => $this->Auth->user('id')],
-                                ['Message.to_id' => $this->request->data['Message']['to_id']],
-                            ]],
-                            ['AND' => [
-                                ['Message.to_id' => $this->Auth->user('id')],
-                                ['Message.from_id' => $this->request->data['Message']['to_id']],
-                            ]]
-                        ]
-                    ],
-                ]);
+                # check if message thread already exists
+                $messages = $this->_checkMessageExists($this->request->data['Message']['to_id']);
 
-                if (!empty($messages)) {
-                    $reply = [
-                        'Reply' => [
-                            'message_id' => $messages['Message']['id'],
-                            'from_id' => $this->Auth->user('id'),
-                            'content' => $this->request->data['Message']['content'],
-                        ],
-                    ];
-
-                    if ($this->Reply->save($reply)) {
-                        return $this->redirect(['action' => 'index']);
-                    }
-                } else {
+                if (empty($messages)) {
+                    # message thread does not exist, save message thread and reply data
                     $this->request->data['Message']['from_id'] = (int)$this->Auth->user('id');
                     $this->request->data['Message']['to_id'] = (int)$this->request->data['Message']['to_id'];
                     if ($this->Message->save($this->request->data)) {
@@ -153,6 +122,19 @@ class MessagesController extends AppController {
                         if ($this->Reply->save($reply)) {
                             return $this->redirect(['action' => 'index']);
                         }
+                    }
+                } else {
+                    # message thread already exists, save reply data only
+                    $reply = [
+                        'Reply' => [
+                            'message_id' => $messages['Message']['id'],
+                            'from_id' => $this->Auth->user('id'),
+                            'content' => $this->request->data['Message']['content'],
+                        ],
+                    ];
+
+                    if ($this->Reply->save($reply)) {
+                        return $this->redirect(['action' => 'index']);
                     }
                 }
             }
@@ -187,6 +169,7 @@ class MessagesController extends AppController {
         ];
         $replyData =$this->Paginator->paginate('Reply');
 
+        # format result data
         $replies = [];
         foreach ($replyData as $key => $data) {
             $replies[$key] = [
@@ -212,6 +195,59 @@ class MessagesController extends AppController {
                 return json_encode($data);
             }
         }
+    }
+
+    /**
+     * Checks if message thread already exists
+     * @param  string $userId id of user
+     * @return array message data
+     */
+    private function _checkMessageExists($userId) {
+        return $this->Message->find('first', [
+            'fields' => ['Message.id'],
+            'conditions' => [
+                'OR' => [
+                    ['AND' => [
+                        ['Message.from_id' => $this->Auth->user('id')],
+                        ['Message.to_id' => $userId],
+                    ]],
+                    ['AND' => [
+                        ['Message.to_id' => $this->Auth->user('id')],
+                        ['Message.from_id' => $userId],
+                    ]]
+                ]
+            ],
+            'recursive' => -1,
+        ]);
+    }
+
+    /**
+     * Set option data for recipient dropdown in add messages view
+     * @return array option data
+     */
+    private function _setOptionData() {
+        # get all users except current user
+        $this->loadModel('User');
+        $users = $this->User->find('all', [
+            'fields' => ['User.id', 'User.name', 'User.image'],
+            'conditions' => [
+                'User.id !=' => $this->Auth->user('id'),
+            ],
+            'recursive' => -1,
+        ]);
+
+        # format options
+        $options = [];
+        foreach($users as $key => $user) {
+            $options[$key] = [
+                'name' => $user['User']['name'],
+                'value' => $user['User']['id'],
+                'data-image' => $user['User']['image'] ?: '',
+            ];
+        }
+        array_unshift($options, ['name' => '', 'value' => '', 'data-image' => '']);
+
+        return $options;
     }
 }
 ?>

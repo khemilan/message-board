@@ -48,12 +48,14 @@ class UsersController extends AppController {
         $data = $this->_getUserData($this->Auth->user('id'));
 
         if ($this->request->is('post') || $this->request->is('put')) {
+            # checks if image is changed and set image data
             $image_data = $this->request->data['User']['image'];
             $this->request->data['User']['image'] = $data['User']['image'];
             if (!empty($image_data['name'])) {
                 $this->request->data['User']['image'] = $image_data['name'];
             }
 
+            # unset email validator if email is not changed
             if ($data['User']['email'] == $this->request->data['User']['email']) {
                 $this->User->validator()->remove('email');
             }
