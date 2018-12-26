@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-          <div class="inbox_chat">
+            <div class="inbox_chat">
                 <?php foreach ($messages as $message): ?>
                     <div class="chat_list active_chat" id="message-<?php echo $message['id']; ?>">
                         <div class="chat_people">
@@ -29,10 +29,10 @@
                                     <?php echo $this->Html->link($message['name'], '/messages/detail/' . $message['id']);?>  
                                     <span class="chat_date">
                                         <?php echo $message['date']; ?>
-                                            <button class="delete-message" data-id="<?php echo $message['id'] ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </span>
+                                        <button class="delete-message" data-id="<?php echo $message['id'] ?>">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
                                 </h5>
                                 <p><?php 
                                     echo $message['isSentByUser'] ? 'You: ' : '';
@@ -43,8 +43,8 @@
                     </div>
                 <?php endforeach; ?>
             
-          </div>
-          <?php 
+            </div>
+            <?php 
                 if ($this->Paginator->counter('{:current}') < $this->Paginator->counter('{:count}')) {
                     echo "<a href='".$this->request->here."?n=".$nextLimit."' class='btn btn-primary btn-lg btn-block'> Show More</a>";
                 }

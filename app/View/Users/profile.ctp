@@ -10,7 +10,6 @@
                         <?php 
                             if(empty($user['User']['image'])) {
                                 echo $this->Html->image(Configure::read('default.image'), ['class' => 'img-circle img-responsive',  'height' => '200', 'width' => '200']) ;
-
                             } else {
                                 echo $this->Html->image('users/' . $user['User']['image'], ['class' => 'img-circle img-responsive',  'height' => '200', 'width' => '200']) ;
                             }

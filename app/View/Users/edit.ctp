@@ -22,20 +22,19 @@
                 'label' => [
                     'text' => 'Image',
                     'class' => 'control-label'
-            ],
+                ],
                 'div' => [
                     'class' => 'form-group',
                 ],
                 'required' => false,
             ]);
-        ?>
-        <?php
+
             echo $this->Form->input('name', [
                 'class' => 'form-control',
                 'label' => [
                     'text' => 'Name',
                     'class' => 'control-label'
-            ],
+                ],
                 'div' => [
                     'class' => 'form-group',
                 ],
@@ -61,7 +60,7 @@
         </div>
         <span class="control-label">Gender</span><br>
         <?php
-            echo $this->Form->radio('gender', [1 => 'Male', 2 => 'Female'],[
+            echo $this->Form->radio('gender', [1 => 'Male', 2 => 'Female'], [
                 'class' => 'form-radio',
                 'required' => false,
                 'legend' => false,

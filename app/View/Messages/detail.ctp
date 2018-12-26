@@ -39,7 +39,6 @@
                                 <?php
                                      if (empty($reply['image'])) {
                                         echo $this->Html->image('users/' . Configure::read('default.image'), ['class' => 'img-circle img-responsive', 'width' => '100', 'height' => '50']);
-                                     
                                      } else {
                                         echo $this->Html->image('users/' . $reply['image'], ['class' => 'img-circle img-responsive', 'width' => '100', 'height' => '50']);
                                      }
