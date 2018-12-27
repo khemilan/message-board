@@ -8,11 +8,8 @@
                 <div>
                     <figure>
                         <?php 
-                            if(empty($user['User']['image'])) {
-                                echo $this->Html->image(Configure::read('default.image'), ['class' => 'img-circle img-responsive',  'height' => '200', 'width' => '200']) ;
-                            } else {
-                                echo $this->Html->image('users/' . $user['User']['image'], ['class' => 'img-circle img-responsive',  'height' => '200', 'width' => '200']) ;
-                            }
+                            $image = $user['User']['image'] ?: Configure::read('default.image');
+                            echo $this->Html->image('users/' . $image, ['class' => 'img-circle img-responsive',  'height' => '200', 'width' => '200']) ;
                         ?>
                     </figure>
                 </div>

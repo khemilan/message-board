@@ -12,16 +12,13 @@
                 </div>
             </div>
             <div class="inbox_chat">
-                <?php foreach ($messages as $message): ?>
+                <?php foreach ($messages as $message) : ?>
                     <div class="chat_list active_chat" id="message-<?php echo $message['id']; ?>">
                         <div class="chat_people">
                             <div class="chat_img">
                                 <?php 
-                                    if(empty($message['image'])) {
-                                        echo $this->Html->image('users/' . Configure::read('default.image'), ['class' => 'img-circle img-responsive']) ;
-                                    } else {
-                                        echo $this->Html->image('users/' . $message['image'], ['class' => 'img-circle img-responsive']);
-                                    }
+                                    $image = $message['image'] ?: Configure::read('default.image');
+                                    echo $this->Html->image('users/' . $image, ['class' => 'img-circle img-responsive']) ;
                                 ?>
                             </div>
                             <div class="chat_ib">
