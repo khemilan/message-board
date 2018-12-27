@@ -32,33 +32,33 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	public $components = [
-        'Flash',
-        'RequestHandler',
-        'Auth' => [
-            'loginRedirect' => [
-                'controller' => 'messages',
-                'action' => 'index'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'users',
-                'action' => 'login',
-            ],
-            'authenticate' => [
-            	'Form' => [
-            		'passwordHasher' => 'Blowfish',
-            		'fields' => [
-            			'username' => 'email',
-            		],
-            	],
-            ],
-        ],
-    ];
+		'Flash',
+		'RequestHandler',
+		'Auth' => [
+			'loginRedirect' => [
+				'controller' => 'messages',
+				'action' => 'index'
+			],
+			'logoutRedirect' => [
+				'controller' => 'users',
+				'action' => 'login',
+			],
+			'authenticate' => [
+				'Form' => [
+					'passwordHasher' => 'Blowfish',
+					'fields' => [
+						'username' => 'email',
+					],
+				],
+			],
+		],
+	];
 
-    public function beforeFilter() {
-        $guestPages = ['login', 'registration'];
-        $this->Auth->allow($guestPages);
+	public function beforeFilter() {
+		$guestPages = ['login', 'registration'];
+		$this->Auth->allow($guestPages);
 
-        $this->set(compact('guestPages'));
+		$this->set(compact('guestPages'));
 		$this->set('authUser', $this->Auth->user());
-    }
+	}
 }
