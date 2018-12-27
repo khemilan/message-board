@@ -76,6 +76,7 @@ class MessagesController extends AppController {
                     'image' => $isSentByUser ? $replyData[0]['imageRecipient'] : $replyData[0]['imageSender'],
                     'content' => $replyData['Reply']['content'],
                     'date' => date('Y/m/d H:i', strtotime($replyData['Reply']['created'])),
+                    'datetime' => date('Y/m/d H:i:s', strtotime($replyData['Reply']['created'])),
                     'isSentByUser' => $isSentByUser,
                 ];
             }
@@ -90,7 +91,7 @@ class MessagesController extends AppController {
                     $sortArray[$key][] = $value;
                 }
             }
-            array_multisort($sortArray["date"], SORT_DESC, $messages);
+            array_multisort($sortArray['datetime'], SORT_DESC, $messages);
         }
 
         $nextLimit = $limit + 10;

@@ -26,12 +26,15 @@ class UsersController extends AppController {
     }
 
     public function registration() {
+        if ($this->Auth->user()) {
+            return $this->redirect('/messages/');
+        }
         if ($this->request->is('post')) {
             $this->User->set($this->request->data);
+            $this->request->data['User']['last_login_time'] = date('Y-m-d H:i:s');
+            $this->request->data['User']['created_ip'] = $this->request->clientIp();
             if ($this->User->validates()) {
-                $this->request->data['User']['last_login_time'] = date('Y-m-d H:i:s');
-                $this->request->data['User']['created_ip'] = $this->request->clientIp();
-                if ($this->User->save()) {
+                if ($this->User->save($this->request->data)) {
                     $this->Auth->login();
                     return $this->render('registrationComplete');
                 }
