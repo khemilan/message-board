@@ -52,10 +52,10 @@ class UsersController extends AppController {
 
         if ($this->request->is('post') || $this->request->is('put')) {
             # checks if image is changed and set image data
-            $image_data = $this->request->data['User']['image'];
+            $imageData = $this->request->data['User']['image'];
             $this->request->data['User']['image'] = $data['User']['image'];
-            if (!empty($image_data['name'])) {
-                $this->request->data['User']['image'] = $image_data['name'];
+            if (!empty($imageData['name'])) {
+                $this->request->data['User']['image'] = $imageData['name'];
             }
 
             # unset email validator if email is not changed
@@ -69,10 +69,10 @@ class UsersController extends AppController {
                 $this->request->data['User']['birthdate'] = date('Y-m-d', strtotime($this->request->data['User']['birthdate']));
                 if ($this->User->save($this->request->data)) {
                     # Move image
-                    if (!empty($image_data['name'])) {
+                    if (!empty($imageData['name'])) {
                         $this->_saveImage([
-                            'tmp_name' => $image_data['tmp_name'],
-                            'filename' => $image_data['name']
+                            'tmp_name' => $imageData['tmp_name'],
+                            'filename' => $imageData['name']
                         ]);
                     }
 

@@ -7,14 +7,5 @@ class Reply extends AppModel {
 		 	'foreignKey' => 'message_id',
 	 	]
 	 ];
-
-	 public $validate = [
-        'content' => [
-            'required' => [
-                'rule' => 'notBlank',
-                'message' => 'Name is required'
-            ],
-        ],
-     ];
 }
 ?>

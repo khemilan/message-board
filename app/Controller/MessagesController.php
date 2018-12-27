@@ -168,7 +168,7 @@ class MessagesController extends AppController {
             'recursive' => -1,
             'limit' => $limit
         ];
-        $replyData =$this->Paginator->paginate('Reply');
+        $replyData = $this->Paginator->paginate('Reply');
 
         # format result data
         $replies = [];
@@ -239,7 +239,7 @@ class MessagesController extends AppController {
 
         # format options
         $options = [];
-        foreach($users as $key => $user) {
+        foreach ($users as $key => $user) {
             $options[$key] = [
                 'name' => $user['User']['name'],
                 'value' => $user['User']['id'],
