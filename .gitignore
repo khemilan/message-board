@@ -10,6 +10,8 @@
 /tags
 *.mo
 
+/app/webroot/img/users/
+
 # IDE and editor specific files #
 #################################
 /nbproject

@@ -99,7 +99,7 @@ class UsersController extends AppController {
 	private function _saveImage($data = []) {
 		move_uploaded_file(
 			$data['tmp_name'],
-			WWW_ROOT . 'img' . DS . 'users' . DS . $data['filename']
+			IMAGES . 'users' . DS . $data['filename']
 		);
 	}
 }

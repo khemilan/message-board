@@ -6,7 +6,6 @@
 				<div class="card-header">
 					<?php
 						echo $this->Form->input('to_id', [
-							'default' => '',
 							'options' => $users,
 							'class' => 'form-control',
 							'label' => [

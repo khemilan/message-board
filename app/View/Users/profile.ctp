@@ -24,11 +24,7 @@
 							<h2><?php echo $user['User']['name']; ?></h2>
 							<p><strong>Gender: </strong><?php echo Configure::read('gender.' . $user['User']['gender']); ?> </p>
 							<p><strong>Birthdate: </strong>
-							<?php
-								if (!empty($user['User']['birthdate'])) {
-									echo date('F d, Y', strtotime($user['User']['birthdate']));
-								}
-							?>
+							<?php echo (empty($user['User']['birthdate'])) ? '' : date('F d, Y', strtotime($user['User']['birthdate'])); ?>
 							</p>
 							<p><strong>Joined: </strong> <?php echo date('F d, Y ha', strtotime($user['User']['created'])); ?> </p>
 							<p><strong>Last Login: </strong> <?php echo date('F d, Y ha', strtotime($user['User']['last_login_time'])); ?> </p>

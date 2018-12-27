@@ -22,12 +22,12 @@ class MessagesController extends AppController {
 			'recursive' => -1,
 			'limit' => $limit,
 		];
-		$messageId =$this->Paginator->paginate('Message');
+		$messageId = $this->Paginator->paginate('Message');
 
 		$messages = [];
 		if (!empty($messageId)) {
 			foreach ($messageId as $message) {
-				$replyData = $this->Message->find('first',[
+				$replyData = $this->Message->find('first', [
 					'fields' => [
 						'Message.id', 'Message.to_id', 'Message.from_id', 'Message.content', 'Message.created',
 						'Reply.id', 'Reply.content', 'Reply.created',
