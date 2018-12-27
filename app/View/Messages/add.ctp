@@ -1,17 +1,7 @@
 <div class="message-div">
     <div class="col-lg-12">
+        <?php echo $this->element('validationErrors', ['model' => 'Message', 'text' => 'Message sending failed. Please correct the following errors:']); ?>
         <div class="card card-outline-secondary my-4">
-            <?php 
-                $errors = '';
-                if (isset($this->validationErrors['Message'])) {
-                    foreach ($this->validationErrors['Message'] as $validationError) {
-                      $errors .= $this->Html->tag('li', $validationError[0]);
-                    }
-                    if (!empty($errors)) {
-                        echo $this->Html->div('alert alert-danger', 'Message sending failed. Please correct the following errors:' . $this->Html->tag('ul', $errors, ['class' => "regist-errors"]));
-                    }
-                }
-            ?>
             <?php echo $this->Form->create('Message', ['novalidate' => true]); ?>
                 <div class="card-header">
                    <?php 

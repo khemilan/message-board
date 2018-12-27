@@ -1,14 +1,6 @@
 <div class="profile-div ">
     <div class="profile-edit">
-        <?php 
-            $errors = '';
-            foreach ($this->validationErrors['User'] as $validationError) {
-              $errors .= $this->Html->tag('li', $validationError[0]);
-            }
-            if (!empty($errors)) {
-                echo $this->Html->div('alert alert-danger', 'Edit failed. Please correct the following errors:' . $this->Html->tag('ul', $errors, ['class' => "regist-errors"]));
-            }
-        ?>
+        <?php echo $this->element('validationErrors', ['model' => 'User', 'text' => 'Edit failed. Please correct the following errors:']); ?>
         <div class="form-group">
             <?php echo $this->Html->image('users/' . $this->request->data['User']['image'], ['id' => 'image', 'class' => 'img-circle img-responsive', 'height' => '200', 'width' => '200']) ?>
         </div>
@@ -60,7 +52,7 @@
         </div>
         <span class="control-label">Gender</span><br>
         <?php
-            echo $this->Form->radio('gender', [1 => 'Male', 2 => 'Female'], [
+            echo $this->Form->radio('gender', Configure::read('gender'), [
                 'class' => 'form-radio',
                 'required' => false,
                 'legend' => false,
@@ -81,3 +73,23 @@
         <?php echo $this->Form->end();?>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $("#datepicker").datepicker();
+    });
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#new-image").change(function() {
+        previewImage(this);
+    });
+</script>

@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="msg_history">
-                <?php foreach ($replies as $reply): ?>
+                <?php foreach ($replies as $reply) : ?>
                     <?php if ($reply['isSentByUser']) : ?>
                         <div class="outgoing_msg" id="reply-<?php echo $reply['id']; ?>">
                             <div class="sent_msg">
@@ -37,11 +37,8 @@
                         <div class="incoming_msg">
                             <div class="incoming_msg_img">
                                 <?php
-                                     if (empty($reply['image'])) {
-                                        echo $this->Html->image('users/' . Configure::read('default.image'), ['class' => 'img-circle img-responsive', 'width' => '100', 'height' => '50']);
-                                     } else {
-                                        echo $this->Html->image('users/' . $reply['image'], ['class' => 'img-circle img-responsive', 'width' => '100', 'height' => '50']);
-                                     }
+                                    $image = $reply['image'] ?: Configure::read('default.image');
+                                    echo $this->Html->image('users/' . $image, ['class' => 'img-circle img-responsive',  'height' => '50', 'width' => '70']) ;
                                 ?>
                             </div>
                             <div class="received_msg">

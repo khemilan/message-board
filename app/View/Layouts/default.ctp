@@ -34,11 +34,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(['message-board', 'bootstrap/bootstrap.min.css', ]);
-        echo $this->Html->script(['message']);
 
         echo $this->fetch('meta');  
         echo $this->fetch('css');
-        // echo $this->fetch('script');
+        echo $this->fetch('script');
     ?>
 </head>
 <body>
